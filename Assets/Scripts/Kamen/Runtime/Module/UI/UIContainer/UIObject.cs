@@ -263,7 +263,7 @@ namespace KamenGameFramewrok
         /// 设置UI大小
         /// </summary>
         /// <param name="size"></param>
-        public void SetSize(Vector2 size)
+        public virtual void SetSize(Vector2 size)
         {
             UITransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
             UITransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
