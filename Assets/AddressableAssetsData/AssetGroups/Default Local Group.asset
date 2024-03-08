@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 4eb035a1d814df947be0071bb5b69d86
+  m_SerializeEntries:
+  - m_GUID: 97534fa01241ffb42ad3c6e8f8e13ae0
+    m_Address: Assets/Resources_moved/Game/UI/UIAlertView.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 877b11cb2b15ba542b485f7ab8d1aca6
+    m_Address: Assets/Resources_moved/Game/UI/UITestActionBarView.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 81d1af216de040e498ca68b0f4a24d17
+    m_Address: Assets/Resources_moved/Game/UI/UITestActionBarViewA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ecf51c63b628c114db22d60a9c4861eb
+    m_Address: Assets/Resources_moved/Game/UI/UITestActionBarViewB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4147e3f427a950c46a73d7267c6131f1
+    m_Address: Assets/Resources_moved/Game/UI/UITestItem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6bab71d5115eeab4a830dff628f755b6
+    m_Address: Assets/Resources_moved/Game/UI/UITestView.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 46c90306ce3d99545b82e65e71fce6bf, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: dee5f7960f545f743854db41a8343961, type: 2}
+    - {fileID: 11400000, guid: 98fd2cd1c905dd541be668a26064de66, type: 2}

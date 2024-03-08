@@ -1,0 +1,58 @@
+﻿__FILE_HEADER__
+
+__NAMESPACE_INCLUDE__
+
+#pragma warning disable 219
+#pragma warning disable 414
+namespace __NAMESPACE__
+{
+    public partial class __CLASS_NAME__ : UIActionBarBaseView
+    {
+        public override string AssetPath {get;protected set;} = @"__ASSET_PATH__";
+        public override string Name {get;protected set;} = @"__CLASS_NAME__";
+        public string PrefabAssetPath {get;protected set;} = @"__PREFAB_PATH__";
+
+#region Control defines 
+__CONTROL_DEFINES__
+#endregion Control defines
+
+#region Custom Control defines
+__CUSTOM_CONTROL_DEFINES__
+#endregion Custom Control defines
+
+        protected override void OnInitializeAsset()
+        {
+            base.OnInitializeAsset();
+            {
+                InstantiateAsset(AssetPath);
+
+                if( null == this.Root )
+                {
+                    return;
+                }
+            }
+        }
+        
+        protected override void FindComponent()
+        {    
+#region Control assigners 
+__CONTROL_ASSIGNERS__
+#endregion Control assigners 
+
+#region Custom Control assigners 
+__CUSTOM_CONTROL_ASSIGNERS__
+#endregion Custom Control assigners
+
+#region Control event registers 
+
+#endregion Control event registers
+                 
+        }
+
+#region Control event processors 
+
+#endregion Control event processors 
+    }
+}
+#pragma warning restore 219
+#pragma warning restore 414
