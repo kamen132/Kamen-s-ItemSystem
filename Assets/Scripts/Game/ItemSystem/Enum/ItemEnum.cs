@@ -43,7 +43,7 @@ namespace Game.ItemSystem
         LockedStyle,               //锁定状态
         AddStyle,                  //添加状态
         //通用的状态：边框图+icon
-        RewardIconOnlyStyle,       //奖励物品展示状态[资源类无边框，其他带边框]
+        RewardIconOnlyStyle,       //奖励物品展示状态
         NoBorderIconOnlyStyle,     //只有icon图标
         BorderIconOnlyStyle,       //边框+图标
         BorderIconWithBgStyle,     //图标+背景

@@ -1,4 +1,6 @@
-﻿namespace Game.ItemSystem.View
+﻿using System;
+
+namespace Game.ItemSystem.View
 {
     public interface IPresenterContextView
     {
@@ -30,5 +32,6 @@
         /// <param name="isSelected"></param>
         void OnSelected(bool isSelected);
 
+        void SetCardStyle(Enum @enum);
     }
 }

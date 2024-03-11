@@ -1,10 +1,4 @@
-﻿/**
- * 通用物品、英雄小卡，材料，经验卡等展示组件
- * Created by anychen on 2019年1月16日
- */
-
-
-using System;
+﻿using System;
 using Game.ItemSystem;
 using Game.ItemSystem.View;
 using KamenGameFramewrok;
@@ -15,12 +9,11 @@ namespace Game.UI.Code
 {
     public partial class ItemPresenter : UIItem
     {
-        private UGUIEventLongPress mEventLongPress; //ui长按\点击
-        private Action<ItemPresenter> mOnItemClick; //点击回调
-        private Action<ItemPresenter, PointerEventData, bool> mOnLongPressListener; //长按回调
+        private UGUIEventLongPress mEventLongPress; 
+        private Action<ItemPresenter> mOnItemClick; 
+        private Action<ItemPresenter, PointerEventData, bool> mOnLongPressListener; 
 
         private bool mIgnoreEmptyClick;
-        
         private IPresenterContextView mContextView;
         private ItemPresenterInfo mContext;
         private Vector3 mTargetMovePos;
@@ -54,21 +47,21 @@ namespace Game.UI.Code
             switch (style.Type)
             {
                 //todo
-                // case CustomPresenterStyle.EnumStyleType.PresenterStyle:
-                //     SetContext(value, style.PresenterStyle);
-                //     break;
-                // case CustomPresenterStyle.EnumStyleType.HeroSmallCardStyle:
-                //     SetContext(value, EnumPresenterStyle.NormalStyle);
-                //     GetItemView<HeroCardSmall>()?.SetCardStyle(style.HeroSmallCardStyle);
-                //     break;
-                // case CustomPresenterStyle.EnumStyleType.ItemCardStyle:
-                //     SetContext(value, EnumPresenterStyle.NormalStyle);
-                //     GetItemView<ItemCard>()?.SetCardStyle(style.ItemCardStyle);
-                //     break;
-                // case CustomPresenterStyle.EnumStyleType.EquipCardStyle:
-                //     SetContext(value, EnumPresenterStyle.NormalStyle);
-                //     GetItemView<PresenterAfEquipCell>()?.SetCardStyle(style.EquipCardStyle);
-                //     break;
+                case CustomPresenterStyle.EnumStyleType.PresenterStyle:
+                    SetContext(value, style.PresenterStyle);
+                    break;
+                case CustomPresenterStyle.EnumStyleType.HeroSmallCardStyle:
+                    SetContext(value, EnumPresenterStyle.NormalStyle);
+                    GetItemView<HeroCardCell>()?.SetCardStyle(style.HeroSmallCardStyle);
+                    break;
+                case CustomPresenterStyle.EnumStyleType.ItemCellStyle:
+                    SetContext(value, EnumPresenterStyle.NormalStyle);
+                    GetItemView<ItemCell>()?.SetCardStyle(style.ItemCellStyle);
+                    break;
+                case CustomPresenterStyle.EnumStyleType.HeroEquipStyle:
+                    SetContext(value, EnumPresenterStyle.NormalStyle);
+                    GetItemView<HeroEquipCell>()?.SetCardStyle(style.HeroEquipCardStyle);
+                    break;
             }
         }
 
@@ -89,7 +82,8 @@ namespace Game.UI.Code
 
                 return;
             }
-            if(!IsAlive) return;
+
+            if (!IsAlive) return;
             CheckContext(value);
             mContext = value;
             LoadWithCategory(mContext.Category);
@@ -103,20 +97,12 @@ namespace Game.UI.Code
         {
             return mContext;
         }
-
-        /// <summary>
-        /// 外边框
-        /// </summary>
-        /// <param name="borderImgName"></param>
+        
         public void SetBorderImage(string borderImgName)
         {
-           //todo K
+            //todo K
         }
-
-        /// <summary>
-        /// 加锁图
-        /// </summary>
-        /// <param name="lockedImgName"></param>
+        
         public void SetLockedImage(string lockedImgName)
         {
             //todo K
@@ -126,25 +112,17 @@ namespace Game.UI.Code
         {
             _BigLock.SetActive(isLock);
         }
-
-        /// <summary>
-        /// +号图
-        /// </summary>
-        /// <param name="lockedImgName"></param>
+        
         public void SetAddImage(string lockedImgName)
         {
             //todo K
         }
-
-        /// <summary>
-        /// 置灰色
-        /// </summary>
-        /// <param name="isGray"></param>
+        
         public void SetGray(bool isGray)
         {
             mContextView?.SetGray(isGray);
         }
-        
+
         public void SetLock(bool isLock)
         {
             _Lock.SetActive(isLock);
@@ -160,32 +138,23 @@ namespace Game.UI.Code
             _VirtualItemTxt.SetActive(true);
             mVirtualItemTxtTxt.text = txt;
         }
-
-        /// <summary>
-        /// 红点显示
-        /// </summary>
-        /// <param name="active"></param>
+        
         public void SetRedDotStateActive(bool active)
         {
             _redDot.SetActive(active);
         }
-        
+
         public void SetSelectAble(bool isSelected)
         {
             _mPresenterSelect.SetActive(isSelected);
             mContextView?.OnSelected(isSelected);
         }
         
-        public void SetCommonSelected(bool isSelected)
-        {
-            _mPresenterSelect.SetActive(isSelected);
-            // mContextView?.OnSelected(isSelected);
-        }
 
-        public void SetCommonSelectedRect(int Left,int Bottom,int Right,int Top)
+        public void SetCommonSelectedRect(int Left, int Bottom, int Right, int Top)
         {
-            _mPresenterSelect.GetComponent<RectTransform>().offsetMin=new Vector2(Left,Bottom);
-            _mPresenterSelect.GetComponent<RectTransform>().offsetMax=new Vector2(Right,Top);
+            _mPresenterSelect.GetComponent<RectTransform>().offsetMin = new Vector2(Left, Bottom);
+            _mPresenterSelect.GetComponent<RectTransform>().offsetMax = new Vector2(Right, Top);
         }
 
 
@@ -243,23 +212,17 @@ namespace Game.UI.Code
             base.OnInitializeComponent();
 
             mEventLongPress = UGUIEvents.GetLongPress(this.Root, null);
-            // ItemPresenter默认添加长按事件
             mEventLongPress.onPress = OnLongPressTriggered;
-            // ItemPresenter默认添加点击事件
-            // (点击事件这样处理的原因是, 点击和长按会出现冲突。
-            // 两个事件必须在一个组件中处理, 同一个操作只允许触发1次)
             mEventLongPress.onPressCancel = OnLongPressCancelTriggered;
         }
 
-
-        // 长按被触发
+        
         private void OnLongPressTriggered(PointerEventData data, bool isPress)
         {
             if (IsEmptyCardStyle(mPresenterStyle)) return;
             
-            // 防止被触发两次
-            if (!isPress) return; 
-            
+            if (!isPress) return;
+
             if (null == mOnLongPressListener)
             {
                 mContextView?.OnDefaultLongPressedHandler();
@@ -268,11 +231,8 @@ namespace Game.UI.Code
             {
                 mOnLongPressListener.Invoke(this, data, isPress);
             }
-
-            Debug.Log("item presenter LongPress.");
         }
-
-        // 长按取消(未达到长按阈值), 视为点击被触发
+        
         private void OnLongPressCancelTriggered(PointerEventData data)
         {
             OnBtn_Clicked(null, null);
@@ -304,49 +264,46 @@ namespace Game.UI.Code
             _mPresenterStyle.SetActive(false);
         }
 
-
         public T GetItemView<T>() where T : class, IPresenterContextView
         {
             return mContextView as T;
         }
         
-        /// <summary>
-        /// 是否卖完(暂时用于商城)
-        /// </summary>
-        /// <param name="isGot"></param>
-        public void SetGot(bool isGot){
+        public void SetGot(bool isGot)
+        {
             mContextView?.SetGray(isGot);
             if (_GotImage != null)
             {
                 _GotImage.SetActive(isGot);
             }
-//            _GotImage?.SetActive(isGot);
         }
 
 
-        public void SetGotScale(float scale){
+        public void SetGotScale(float scale)
+        {
             if (_GotImage != null)
             {
-                _GotImage.transform.localScale = new Vector3(scale,scale,scale);
+                _GotImage.transform.localScale = new Vector3(scale, scale, scale);
             }
         }
         
-        // 展示逻辑(分层？，英雄，物品，碎片)
         private void LoadWithCategory(EnumItemPresenterCategory category)
         {
             mDisplayCategory = category;
             switch (category)
             {
                 //todo 在这往content节点添加对应的itemcell
-                // case EnumItemPresenterCategory.Hero:
-                //     InitCategoryItem<HeroCardSmall>();
-                //     break;
-                // case EnumItemPresenterCategory.Item:
-                //     InitCategoryItem<ItemCard>();
-                //     break;
+                case EnumItemPresenterCategory.Hero:
+                    InitCategoryItem<HeroCardCell>();
+                    break;
+                case EnumItemPresenterCategory.Item:
+                    InitCategoryItem<ItemCell>();
+                    break;
+                case EnumItemPresenterCategory.HeroEquip:
+                    InitCategoryItem<HeroEquipCell>();
+                    break;
             }
-
-            //同比整体缩放---》DisplaySize
+            
             if (mDisplaySize != Vector2.zero)
             {
                 ScaleToDisplaySize();
@@ -359,7 +316,7 @@ namespace Game.UI.Code
         {
             mDisplaySize = size;
             ScaleToDisplaySize();
-            base.SetSize(size); //使用UIObject的SetSize
+            base.SetSize(size); 
         }
 
         public override void SetSize(Vector2 size)
@@ -389,8 +346,7 @@ namespace Game.UI.Code
 
             UIItem contextItem = mContextView as UIItem;
             RectTransform contentRect = contextItem.UITransform;
-
-            // 如果没有设置缩放,设置实例化卡片原始的尺寸给ItemPresenter
+            
             if (mDisplaySize == Vector2.zero)
             {
                 UITransform.sizeDelta = contentRect.sizeDelta;
@@ -404,21 +360,10 @@ namespace Game.UI.Code
             _mPresenterCard.SetActive(true);
         }
         
-        /// <summary>
-        /// TableView绑定数据用
-        /// </summary>
-        public void Binding(ItemPresenterInfo data, int dataIndex)
-        {
-            this.SetContext(data);
-        }
-        
-        
+
 
         #region Click Event
         
-        /// <summary>
-        /// 设置点击事件（覆盖所有点击事件）
-        /// </summary>
         public void SetClickListener(Action<ItemPresenter> callback)
         {
             mOnItemClick = callback;
@@ -428,19 +373,12 @@ namespace Game.UI.Code
         {
             mIgnoreEmptyClick = result;
         }
-
-        /// <summary>
-        /// 长按事件
-        /// </summary>
-        /// <param name="callback"></param>
+        
         public void SetLongPressListener(Action<ItemPresenter, PointerEventData, bool> callback)
         {
             mOnLongPressListener = callback;
         }
-
-        /// <summary>
-        /// 设置点击事件Active
-        /// </summary>
+        
         public void SetClickActive(bool active)
         {
             if (null != mEventLongPress)
@@ -484,49 +422,44 @@ namespace Game.UI.Code
                     Convert2HeroCardStyle();
                     break;
                 case EnumItemPresenterCategory.Item:
-                    Convert2ItemCardStyle();
+                    Convert2ItemCellStyle();
+                    break;
+                case EnumItemPresenterCategory.HeroEquip:
+                    Convert2HeroEquipInfoItemStyle();
                     break;
             }
         }
-        
 
-        private void Convert2ItemCardStyle()
+
+        private void Convert2ItemCellStyle()
         {
-            // switch (mPresenterStyle)
-            // {
-            //     case EnumPresenterStyle.NormalStyle:
-            //         GetItemView<ItemCard>()?.SetCardStyle(EnumItemCardStyle.NormalStyle);
-            //         break;
-            //     case EnumPresenterStyle.NoBorderIconOnlyStyle: //
-            //         GetItemView<ItemCard>()?.SetCardStyle(EnumItemCardStyle.NoBorderIconOnlyStyle);
-            //         break;
-            //     case EnumPresenterStyle.RewardIconOnlyStyle:
-            //     case EnumPresenterStyle.BorderIconOnlyStyle:
-            //         GetItemView<ItemCard>()?.SetCardStyle(EnumItemCardStyle.BorderIconOnlyStyle);
-            //         break;
-            //     case EnumPresenterStyle.BorderIconWithBgStyle:
-            //         GetItemView<ItemCard>()?.SetCardStyle(EnumItemCardStyle.BorderIconWithBgStyle);
-            //         break;
-            //         
-            // }
+            switch (mPresenterStyle)
+            {
+                case EnumPresenterStyle.NormalStyle:
+                    GetItemView<ItemCell>()?.SetCardStyle(EnumItemCellStyle.NormalStyle);
+                    break;
+                case EnumPresenterStyle.NoBorderIconOnlyStyle: 
+                    GetItemView<ItemCell>()?.SetCardStyle(EnumItemCellStyle.NoBorderIconOnlyStyle);
+                    break;
+                case EnumPresenterStyle.RewardIconOnlyStyle:
+                case EnumPresenterStyle.BorderIconOnlyStyle:
+                    GetItemView<ItemCell>()?.SetCardStyle(EnumItemCellStyle.BorderIconOnlyStyle);
+                    break;
+                case EnumPresenterStyle.BorderIconWithBgStyle:
+                    GetItemView<ItemCell>()?.SetCardStyle(EnumItemCellStyle.BorderIconWithBgStyle);
+                    break;
+                    
+            }
         }
 
         private void Convert2HeroCardStyle()
         {
-            // switch (mPresenterStyle)
-            // {
-            //     case EnumPresenterStyle.NormalStyle:
-            //         GetItemView<HeroCardSmall>()?.SetCardStyle(EnumHeroSmallCardStyle.NormalStyle);
-            //         break;
-            //     case EnumPresenterStyle.NoBorderIconOnlyStyle:
-            //         GetItemView<HeroCardSmall>()?.SetCardStyle(EnumHeroSmallCardStyle.NoBorderIconOnlyStyle);
-            //         break;
-            //     case EnumPresenterStyle.RewardIconOnlyStyle:
-            //     case EnumPresenterStyle.BorderIconOnlyStyle:
-            //     case EnumPresenterStyle.BorderIconWithBgStyle:
-            //         GetItemView<HeroCardSmall>()?.SetCardStyle(EnumHeroSmallCardStyle.BorderIconOnlyStyle);
-            //         break;
-            // }
+           
+        }
+
+        private void Convert2HeroEquipInfoItemStyle()
+        {
+            
         }
         #endregion
     }
